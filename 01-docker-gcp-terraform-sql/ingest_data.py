@@ -15,39 +15,47 @@ def main(params):
     table_name = params.table_name
     url = params.url
 
-    csv_name = "yellow_taxi_data_2020_05.csv.gz"
-
+    csv_name = "green_taxi_data_2019_09.csv.gz"
+    # get csv file
     os.system(f"wget {url} -O {csv_name}")
 
     # create engine for connecting
     engine = create_engine(f"postgresql://{user}:{password}@{host}:{port}/{db}")
     engine.connect()
 
-    # create a iterator for data chunk reading
-    df_iter = pd.read_csv(csv_name, compression="gzip", iterator=True, chunksize=100000)
+    try:
 
-    df = next(df_iter)
+        # create a iterator for data chunk reading
+        df_iter = pd.read_csv(csv_name, compression="gzip", iterator=True, chunksize=100000)
 
-    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
-    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
-
-    # create a table with column names
-    df.head(n=0).to_sql(name=table_name, con=engine, if_exists="replace")
-
-    # ingest data with iterators
-    while True:
-        t_start = time()
-        
         df = next(df_iter)
-        
-        df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
-        df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
-        
-        df.to_sql(name=table_name, con=engine, if_exists="append")
-        
-        t_end = time()
-        
-        print("inserted another chunl..., took %.3f second" % (t_end - t_start))
+
+        df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
+        df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
+
+        # create a table with column names
+        df.head(n=0).to_sql(name=table_name, con=engine, if_exists="replace")
+
+        # insert first chunk 
+        df.to_sql(name=table_name, con=engine, if_exists="replace")
+
+        # ingest data with iterators
+        while True:
+            t_start = time()
+            
+            df = next(df_iter)
+            
+            df.lpep_pickup_datetime = pd.to_datetime(df.lpep_pickup_datetime)
+            df.lpep_dropoff_datetime = pd.to_datetime(df.lpep_dropoff_datetime)
+            
+            df.to_sql(name=table_name, con=engine, if_exists="append")
+            
+            t_end = time()
+            
+            print("inserted another chunl..., took %.3f second" % (t_end - t_start))
+
+    except StopIteration:
+        print("All chunks processed.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ingest csv.gz data to Postgres")

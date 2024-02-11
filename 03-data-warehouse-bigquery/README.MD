@@ -14,4 +14,36 @@ OPTIONS (
   FORMAT = 'Parquet',
   uris = ['gs://de-zoomcamp-xiangivyli/ny_green_taxi_data_2022.parquet']
 )
+
+-- create a materialised table
+CREATE OR REPLACE TABLE cedar-style-412618.ny_taxi_green.non_partitioned_2022_taxi AS
+SELECT * FROM `cedar-style-412618.ny_taxi_green.external_table_2022`;
 ```
+Q1 Count
+```
+SELECT COUNT(*)
+FROM cedar-style-412618.ny_taxi_green.external_table_2022;
+
+-- 840402
+```
+
+Q2 Count the distinct number of PULocationID
+```
+--0 MB data
+SELECT COUNT(DISTINCT PULocationID)
+FROM cedar-style-412618.ny_taxi_green.external_table_2022;
+
+--6.41MB data
+SELECT COUNT(DISTINCT PULocationID)
+FROM cedar-style-412618.ny_taxi_green.non_partitioned_2022_taxi;
+```
+
+Q3 Count fare_amount of 0
+```
+SELECT COUNT(fare_amount)
+FROM cedar-style-412618.ny_taxi_green.non_partitioned_2022_taxi
+WHERE fare_amount = 0;
+
+--1622
+```
+

@@ -68,6 +68,7 @@ SELECT *
 FROM cedar-style-412618.ny_taxi_green.partitioned_clustered_2022_taxi
 WHERE lpep_pickup_date BETWEEN "2022-01-01" and "2022-03-31"
 ORDER BY PULocationID DESC;
+```
 
 Q5 
 

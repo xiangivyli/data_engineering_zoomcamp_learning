@@ -47,3 +47,24 @@ WHERE fare_amount = 0;
 --1622
 ```
 
+Q4 Filter lpep_pickup_datetime first then order the results by PULocationID
+```
+-- Create a partitioned and clustered table
+CREATE OR REPLACE TABLE cedar-style-412618.ny_taxi_green.partitioned_clustered_2022_taxi
+PARTITION BY lpep_pickup_date
+CLUSTER BY PULocationID AS 
+SELECT * FROM cedar-style-412618.ny_taxi_green.external_table_2022
+
+-- Filter pickup datetime between 01-01 and 03-31
+-- Order by PULocationID
+
+--126.93 MB data to process for non partitioned and clustered table
+SELECT *
+FROM cedar-style-412618.ny_taxi_green.non_partitioned_2022_taxi
+WHERE lpep_pickup_date BETWEEN "2022-01-01" and "2022-03-31"
+ORDER BY PULocationID DESC;
+--31.82 MB data to process for partitioned and clustered table
+SELECT *
+FROM cedar-style-412618.ny_taxi_green.partitioned_clustered_2022_taxi
+WHERE lpep_pickup_date BETWEEN "2022-01-01" and "2022-03-31"
+ORDER BY PULocationID DESC;

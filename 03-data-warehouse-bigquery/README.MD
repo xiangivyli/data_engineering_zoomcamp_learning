@@ -68,3 +68,23 @@ SELECT *
 FROM cedar-style-412618.ny_taxi_green.partitioned_clustered_2022_taxi
 WHERE lpep_pickup_date BETWEEN "2022-01-01" and "2022-03-31"
 ORDER BY PULocationID DESC;
+
+Q5 
+
+```
+--12.82 MB data to process for non partitioned and clustered table
+SELECT DISTINCT PULocationID
+FROM cedar-style-412618.ny_taxi_green.non_partitioned_2022_taxi
+WHERE lpep_pickup_date BETWEEN "2022-06-01" and "2022-06-30"
+ORDER BY PULocationID DESC;
+
+--1.12 MB
+SELECT DISTINCT PULocationID
+FROM cedar-style-412618.ny_taxi_green.partitioned_clustered_2022_taxi
+WHERE lpep_pickup_date BETWEEN "2022-06-01" and "2022-06-30"
+ORDER BY PULocationID DESC;
+```
+
+Q6 GCP Bucket
+Q7 Depends?
+

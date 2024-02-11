@@ -87,5 +87,6 @@ ORDER BY PULocationID DESC;
 ```
 
 Q6 GCP Bucket
-Q7 Depends?
+
+Q7 Table with data size < 1GB, no need
 

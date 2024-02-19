@@ -1,0 +1,6 @@
+version: 2
+
+sources:
+  - name: staging
+    database: cedar-style-412618
+    schema: trips_data_all

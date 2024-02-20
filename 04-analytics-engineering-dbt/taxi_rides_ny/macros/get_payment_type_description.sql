@@ -2,7 +2,7 @@
     This macro returns the description of the payment_type 
 #}
 
-{% macro get_payment_type_description(payment_type) -%}
+{% macro get_payment_type_description(payment_type) %}
 
     case {{ dbt.safe_cast("payment_type", api.Column.translate_type("integer")) }}  
         when 1 then 'Credit card'
@@ -14,4 +14,4 @@
         else 'EMPTY'
     end
 
-{%- endmacro %}
+{% endmacro %}

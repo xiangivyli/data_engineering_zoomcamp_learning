@@ -9,6 +9,6 @@ Step1: Use **Mage** to load dataset (it is prepared in the GitHub) in the Google
 
 Step2: Create `fhv_tripdata_2019` table in the BigQuery
 
-Step3:  
+Step3: stage models and core models to transform, aggregate data then import cleansed data in the BigQuery 
 
 

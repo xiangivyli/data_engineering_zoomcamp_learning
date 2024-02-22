@@ -1,4 +1,4 @@
-## The purpose: prepare **FOR-hire vehicles (FHV)** dataset in the BigQuery.
+## The purpose: prepare **for-hire vehicles (FHV)** dataset in the BigQuery.
 
 ## The requriements are:
 1. keep records with pickup time in year 2019

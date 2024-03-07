@@ -15,7 +15,7 @@ parser.add_argument("--output", required=True)
 args = parser.parse_args()
 
 input_green = args.input_green
-input_yellow = args.input_green
+input_yellow = args.input_yellow
 output = args.output
 
 
@@ -24,7 +24,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 df_green = spark.read.parquet(input_green)
-df_yellow = spark.read.parquet(input_green)
+df_yellow = spark.read.parquet(input_yellow)
 
 
 df_green = df_green \

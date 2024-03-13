@@ -1,0 +1,3 @@
+[submodule "workshop-02-risingwave/risingwave-data-talks-workshop-2024-03-04"]
+	path = workshop-02-risingwave/risingwave-data-talks-workshop-2024-03-04
+	url = https://github.com/risingwavelabs/risingwave-data-talks-workshop-2024-03-04.git
